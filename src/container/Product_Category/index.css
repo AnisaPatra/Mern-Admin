@@ -1,0 +1,35 @@
+.form-control-boot{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-padding-end: 20px;
+    -moz-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -moz-padding-start: 2px;
+    outline: none;
+    border: none;
+    color: black;
+    font-size: inherit;
+    margin-bottom: 25px;
+    overflow: hidden;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    font-family:Copperplate;
+    font-size: 20px;
+
+}
+
+.flexible-content{
+    min-height: 145vh;
+}
+
+.filter{
+    float: left;
+    font-family:Copperplate;
+    font-size: 20px;
+   font-weight:bold
+}
