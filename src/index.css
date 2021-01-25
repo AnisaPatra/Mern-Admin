@@ -44,7 +44,6 @@ main {
   top: 0;
   margin-top: 73px;
   min-height: 100vh;
-  height: 145vh;
   width: 270px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   z-index: 1050;
@@ -58,6 +57,7 @@ main {
 
 #content{
   margin-left: 180px;
+  height: auto;
 }    
 
 .list-group-item {
@@ -95,7 +95,7 @@ main {
 }
 
 .full {
-  height: 70vh;
+  height: 100vh;
 }
 
 .bad-gateway-row {

@@ -22,11 +22,15 @@
     font-size: 20px;
 
 }
-
-.flexible-content{
-    min-height: 145vh;
-}
-
+.sidebar-fixed {
+    max-height: 160vh;
+    
+  }
+  
+  .flexible-content {
+      min-height: 100vh;
+    max-height: 160vh; 
+  }
 .filter{
     float: left;
     font-family:Copperplate;

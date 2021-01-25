@@ -13,12 +13,12 @@ const Home = (props) => {
   return(
     <div>
       <Layout></Layout>
-      <div className="flexible-content">
+      <div className="flexible-content" style={{height: "100vh", backgroundColor: "white"}}>
           <SideNavigation />
-          <main id="content" className="p-5" style={{height: "100%", marginLeft: "270px"}}>
+          <main id="content" className="p-5" style={{marginLeft: "270px"}}>
             <Jumbotron fluid style={{backgroundColor: "white"}}>
               <Container >
-                <h1 class="display-4" style={{fontFamily: "Times New Roman", marginTop: "80px" , fontWeight: "bold"}}>Admin Dashboard</h1>
+                <h1 class="display-4" style={{fontFamily: "Times New Roman", marginTop: "90px" , fontWeight: "bold"}}>Admin Dashboard</h1>
                 <br/>
                 <p class="lead" style={{fontFamily: "Cambria"}}>
                   <p style={{fontWeight: "bold", fontSize: "20px"}}>Welcome to Vridhi Admin Dashboard !!!</p>

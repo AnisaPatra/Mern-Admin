@@ -1,0 +1,29 @@
+.sidebar-fixed {
+    max-height: 160vh;
+    
+  }
+  
+  .flexible-content {
+      min-height: 100vh;
+    max-height: 160vh; 
+  }
+
+.btn{
+    width: 50%;
+    font-family:Copperplate;
+    font-size: 22px;
+   font-weight:bold;
+   color: black;
+}
+
+.btn:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.form-control {
+  width: 50%;
+}
+
+label{
+  float: left;
+}

@@ -12,6 +12,7 @@ import { isUserLoggedIn, getInitialData } from './actions';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Product_Category from './container/Product_Category';
 import {signout} from '../src/actions/auth.actions';
+import EditRetailers from './container/Accounts/EditRetailers';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
       <Switch>
         <PrivateRoute exact path="/" component={Home}/>
         <PrivateRoute exact path="/product_category" component={Product_Category}/>
+        <Route path="/edit/:id" component={EditRetailers} />
         <PrivateRoute exact path="/payment_integerations" component={Payment}/>
         <PrivateRoute exact path="/languages" component={Languages}/>
         <PrivateRoute exact path="/accounts" component={Accounts}/>
