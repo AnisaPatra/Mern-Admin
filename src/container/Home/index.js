@@ -13,7 +13,7 @@ const Home = (props) => {
   return(
     <div>
       <Layout></Layout>
-      <div className="flexible-content" style={{height: "100vh", backgroundColor: "white"}}>
+      <div className="flexible-content" style={{height: "50vh", backgroundColor: "white"}}>
           <SideNavigation />
           <main id="content" className="p-5" style={{marginLeft: "270px"}}>
             <Jumbotron fluid style={{backgroundColor: "white"}}>

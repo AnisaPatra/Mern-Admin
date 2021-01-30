@@ -47,6 +47,9 @@
   padding-left: 50px;
 }
 
+body{
+  background-color: white;
+}
 .log{
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-stretch: expanded;

@@ -5,9 +5,14 @@
   
   .flexible-content {
       min-height: 100vh;
-    max-height: 160vh; 
+    max-height: 160vh;
+    background-color: white; 
   }
 
+  .content{
+    height: 100%;
+    margin-left:270px ;
+  }
 .btn{
     width: 50%;
     font-family:Copperplate;
@@ -26,4 +31,42 @@
 
 label{
   float: left;
+}
+
+.tbody{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 17px;
+  font-stretch: extra-expanded;
+}
+
+.thead{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bolder;
+  font-stretch: extra-expanded;
+}
+
+.h2{
+font-family: 'Times New Roman', Times, serif;
+font-weight: bold;
+text-align: left;
+top: 50px
+}
+
+.tbody td{
+  width: 200px
+}
+
+.tbody td Button{
+  border-radius: 8px;
+  border-width: 3.5px;
+}
+
+#done{
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 30px;
+  float: left;
+}
+
+.filter{
+  float: right;
 }
