@@ -207,7 +207,7 @@ export default class EditUsers extends Component {
                         <MDBInput
                           type="text"
                           required
-                          pattern="^(\+91[\-\s]?)?[0]?[789]\d{9}$"
+                          pattern="^[789]\d{9}$"
                           value={this.state.contactNumber}
                           onChange={this.onChangecontactNumber}
                           style={{ width: "250px" }}

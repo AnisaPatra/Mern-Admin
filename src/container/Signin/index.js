@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
-import { Container, Form, Jumbotron, Button } from 'react-bootstrap';
-import { login } from '../../actions';
+import {  Form, Jumbotron, Button } from 'react-bootstrap';
+import { login } from '../../actions/auth.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { MDBInput } from "mdbreact";

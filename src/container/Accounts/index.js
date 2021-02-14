@@ -20,7 +20,7 @@ const Retailer = props => (
     <td>{props.retail.contactNumber}</td>
     <td>{props.retail.createdAt.substring(0, 10)}</td>
     <td>
-      <Link to={"/edit/" + props.retail._id}>
+      <Link to={"/account_edit/" + props.retail._id}>
         <MDBIcon icon="pen" style={{ color: "#00C851" }} />
       </Link>&nbsp;&nbsp; | &nbsp;&nbsp;
         <a href="#" onClick={() => { props.deleteUser(props.retail._id) }}>
@@ -38,7 +38,7 @@ const Seller = props => (
     <td>{props.sell.gstin}</td>
     <td>{props.sell.contactNumber}</td>
     <td>{props.sell.createdAt.substring(0, 10)}</td>
-    <td> <Link to={"/edit/" + props.sell._id}>
+    <td> <Link to={"/account_edit/" + props.sell._id}>
       <MDBIcon icon="pen" style={{ color: "#00C851" }} />
     </Link>&nbsp;&nbsp; | &nbsp;&nbsp;
         <a href="#" onClick={() => { props.deleteUser(props.sell._id) }}>
@@ -54,13 +54,15 @@ export default class Accounts extends Component {
     super(props);
     this.state = {
       selectValue: "Retailer",
-      sort: '',
-      susers: [],
-      merge3: []
+      sort: null,
+      ssort: null,
+      merge3: [],
+      merge4: [],
     };
 
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.handleSortChange = this.handleSortChange.bind(this);
+    this.handleSsortChange = this.handleSsortChange.bind(this);
 
   }
 
@@ -83,12 +85,21 @@ export default class Accounts extends Component {
         }
         const merge3 = check.flat(1);
         this.setState({ merge3: merge3 });
-        return axios.get('http://localhost:2000/api/sellers');
+        return axios.get('http://localhost:2000/api/sellers?sort=name');
 
       })
       .then(response => {
         this.setState({ susers: response.data });
-        console.log(this.state.susers)
+        var nusers = {};
+        nusers = Object.entries(this.state.susers);
+        const check = [];
+        for (let i = 0; i < nusers.length; i++) {
+          for (let j = 1; j < nusers[i].length; j++) {
+            check.push(nusers[i][j]);
+          }
+        }
+        const merge4 = check.flat(1);
+        this.setState({ merge4: merge4 });
       })
       .catch((error) => {
         console.log(error);
@@ -100,7 +111,35 @@ export default class Accounts extends Component {
     axios.get('http://localhost:2000/api/retailers/?sort=' + this.state.sort)
       .then(response => {
         this.setState({ users: response.data });
-        console.log(this.state.users);
+        var nusers = {};
+        nusers = Object.entries(this.state.users);
+        const check = [];
+        for (let i = 0; i < nusers.length; i++) {
+          for (let j = 1; j < nusers[i].length; j++) {
+            check.push(nusers[i][j]);
+          }
+        }
+        const merge3 = check.flat(1);
+        this.setState({ merge3: merge3 });
+      })
+  }
+
+  handleSsortChange(e) {
+    this.setState({ ssort: e.target.value });
+    console.log(this.state.ssort);
+    axios.get('http://localhost:2000/api/sellers/?sort=' + this.state.ssort)
+      .then(response => {
+        this.setState({ susers: response.data });
+        var nusers = {};
+        nusers = Object.entries(this.state.susers);
+        const check = [];
+        for (let i = 0; i < nusers.length; i++) {
+          for (let j = 1; j < nusers[i].length; j++) {
+            check.push(nusers[i][j]);
+          }
+        }
+        const merge4 = check.flat(1);
+        this.setState({ merge4: merge4 });
       })
   }
 
@@ -122,7 +161,7 @@ export default class Accounts extends Component {
   }
 
   SellerList() {
-    return this.state.susers.map(currentuser => {
+    return this.state.merge4.map(currentuser => {
       return <Seller Sellers={this.Sellers} sell={currentuser} deleteUser={this.deleteUser.bind(this)} key={currentuser._id} />;
     })
   }
@@ -150,21 +189,54 @@ export default class Accounts extends Component {
                   Seller
               </Button></div>
               <br /><br /><br />
-              <label class="filter">Sort : &nbsp;&nbsp; </label>
-              <select ref="userInput" required className="form-control-boot" onChange={this.handleSortChange}>
-                <option value="name" selected={this.state.sort == "name"}>Name</option>
-                <option value="email">Email</option>
-                <option value="shop_name">Shop Name</option>
-                <option value="gstin">GSTIN</option>
-                <option value="contactNumber">Contact Number</option>
-                <option value="createdAt">Creation Time</option>
-              </select>
-              <p>{this.state.selectValue}</p>
               {(() => {
                 if (this.state.selectValue === 'Retailer') {
                   return (
+                    <div>
+                      <label class="filter">Sort : &nbsp;&nbsp; </label>
+                      <select className="form-control-boot" onChange={this.handleSortChange}>
+                        <option value="name" >Select a field</option>
+                        <option value="email">Name</option>
+                        <option value="shop_name">Email</option>
+                        <option value="gstin">Shop Name</option>
+                        <option value="contactNumber">GSTIN</option>
+                        <option value="createdAt">Contact Number</option>
+                        <option>Creation Time</option>
+                      </select>
+                      <Table striped bordered hover variant="grey" class="tb">
+                        <thead class="thead" >
+                          <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Shop Name</th>
+                            <th>GSTIN</th>
+                            <th>Contact Number</th>
+                            <th>Creation Time</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody class="tbody">
+                          {this.RetailerList()}
+                        </tbody>
+                      </Table>
+                    </div>
+                  )
+                }
+
+                return (
+                  <div>
+                    <label class="filter">Sort : &nbsp;&nbsp; </label>
+                    <select className="form-control-boot" onChange={this.handleSsortChange}>
+                      <option value="name" >Select a field</option>
+                      <option value="email">Name</option>
+                      <option value="shop_name">Email</option>
+                      <option value="gstin">Shop Name</option>
+                      <option value="contactNumber">GSTIN</option>
+                      <option value="createdAt">Contact Number</option>
+                      <option>Creation Time</option>
+                    </select>
                     <Table striped bordered hover variant="grey" class="tb">
-                      <thead class="thead" >
+                      <thead class="thead">
                         <tr>
                           <th>Name</th>
                           <th>Email</th>
@@ -176,29 +248,10 @@ export default class Accounts extends Component {
                         </tr>
                       </thead>
                       <tbody class="tbody">
-                        {this.RetailerList()}
+                        {this.SellerList()}
                       </tbody>
                     </Table>
-                  )
-                }
-
-                return (
-                  <Table striped bordered hover variant="grey" class="tb">
-                    <thead class="thead">
-                      <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Shop Name</th>
-                        <th>GSTIN</th>
-                        <th>Contact Number</th>
-                        <th>Creation Time</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody class="tbody">
-                      {this.SellerList()}
-                    </tbody>
-                  </Table>
+                  </div>
                 );
               })()}
 

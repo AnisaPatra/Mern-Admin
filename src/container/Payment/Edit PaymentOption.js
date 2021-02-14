@@ -8,35 +8,33 @@ import { Link } from 'react-router-dom';
 import './index.css';
 import $ from 'jquery';
 
-export default class EditCategory extends Component {
+export default class EditPaymentOption extends Component {
   constructor(props) {
     super(props);
 
     this.onChangename = this.onChangename.bind(this);
-    this.onChangeCategoryImage = this.onChangeCategoryImage.bind(this);
+    this.onChangepic = this.onChangepic.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       name: null,
-      CategoryImage: null,
+      pic: null,
       createdAt: null,
-      categories: []
+      options: []
     }
   }
 
   componentDidMount() {
-    axios.get('http://localhost:2000/api/category/getcatbyid/' + this.props.match.params.id)
+    axios.get('http://localhost:2000/api/payment_options/' + this.props.match.params.id)
       .then(response => {
         this.setState({
           name: response.data.name,
-          CategoryImage: response.data.CategoryImage,
+          pic: response.data.pic,
           createdAt: response.data.createdAt
         });
-        console.log(this.state.CategoryImage);
+        console.log(this.state.pic);
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((error) => {window.alert(error);})
   }
 
   onChangename(e) {
@@ -45,11 +43,11 @@ export default class EditCategory extends Component {
     })
   }
 
-  onChangeCategoryImage(e) {
+  onChangepic(e) {
     var fileName = e.target.files[0].name;
     $('.custom-file-label').html(fileName)
     this.setState({
-      CategoryImage: e.target.files[0]
+      pic: e.target.files[0]
     })
   }
 
@@ -57,8 +55,8 @@ export default class EditCategory extends Component {
     e.preventDefault();
     const formData = new FormData();
     formData.append("name",this.state.name);
-    formData.append("CategoryImage",this.state.CategoryImage);
-    axios.put('http://localhost:2000/api/category/update/' + this.props.match.params.id,formData,
+    formData.append("pic",this.state.pic);
+    axios.put('http://localhost:2000/api/payment_options/' + this.props.match.params.id,formData,
     {
         headers:{
             'Authorization' : 'Bearer ' + window.localStorage.getItem('token') 
@@ -66,13 +64,11 @@ export default class EditCategory extends Component {
     })
       .then(
         response => {
-          this.setState({ categories: response.data });
-          console.log(this.state.categories);
-          console.log(this.state.CategoryImage);
-          window.alert("Category Details Updated Successfully");
+          this.setState({ options: response.data });
+          window.alert("Payment Options Updated Successfully");
         })
         .catch((error) => {
-          window.alert("Error "+ error);
+          window.alert(error);
         })
 
     
@@ -87,7 +83,7 @@ export default class EditCategory extends Component {
           <SideNavigation />
           <main id="content" className="p-5" >
             <Container style={{ backgroundColor: "white" }}>
-              <h2 class="h2">Edit Category</h2>
+              <h2 class="h2">Edit Payment Option</h2>
               <br />
               <form onSubmit={this.onSubmit}>
                 <table cellPadding="10" cellSpacing="25">
@@ -109,7 +105,7 @@ export default class EditCategory extends Component {
                     </tr>
                     <tr>
                       <td>
-                        <label>Category Image: </label>
+                        <label>Image: </label>
                       </td>
                       <td>
                         <div className="custom-file">
@@ -118,7 +114,7 @@ export default class EditCategory extends Component {
                             accept="image/*"
                             className="custom-file-input"
                             aria-describedby="inputGroupFileAddon01"
-                            onChange={this.onChangeCategoryImage}
+                            onChange={this.onChangepic}
                             style={{ width: "250px" }}
                           />
                           <label className="custom-file-label" htmlFor="inputGroupFile01">
@@ -145,7 +141,7 @@ export default class EditCategory extends Component {
                     <br />
                     <tr>
                       <td>
-                        <Link to="/product_category"><Button variant="outline-secondary" class="btn">Back</Button></Link>
+                        <Link to="/payment_integerations"><Button variant="outline-secondary" class="btn">Back</Button></Link>
                       </td>
                       <td>
                         <Button type="submit" variant="outline-success" class="btn">Update</Button>

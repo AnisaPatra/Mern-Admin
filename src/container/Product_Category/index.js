@@ -14,12 +14,12 @@ import { Link } from 'react-router-dom';
 const ParentCategory = props => (
   <tr>
     <td>{props.category.name}</td>
-    <td>{props.category.CategoryImage}</td>
+    <td>localhost:2000{props.category.CategoryImage}</td>
     <td>{props.category.createdAt.substring(0, 10)}</td>
-    <td> <Link to={"/edit/"+props.category._id}>
+    <td> <Link to={"/category_edit/"+props.category._id}>
         <MDBIcon icon="pen" style={{color: "#00C851" }}/>
       </Link>&nbsp;&nbsp; | &nbsp;&nbsp;
-        <a href="#" onClick={() => { props.deleteCategory(props.category._id) }}>
+      <a href="#" onClick={() => { props.deleteCategory(props.category._id) }}>
         <MDBIcon icon="trash-alt" style={{color: "#CC0000"}}/>
         </a>
     </td>
@@ -32,7 +32,7 @@ const SubCategory = props => (
     <td>{props.subcategory.parentCategory}</td>
     <td>{props.subcategory.CategoryImage}</td>
     <td>{props.subcategory.createdAt.substring(0, 10)}</td>
-    <td> <Link to={"/edit/"+props.subcategory._id}>
+    <td> <Link to={"/subcategory_edit/"+props.subcategory._id}>
         <MDBIcon icon="pen" style={{color: "#00C851" }}/>
       </Link>&nbsp;&nbsp; | &nbsp;&nbsp;
         <a href="#" onClick={() => { props.deleteCategory(props.subcategory._id) }}>
@@ -47,6 +47,7 @@ export default class Product_Category extends Component {
 
   constructor(props) {
     super(props);
+    this.deleteCategory = this.deleteCategory.bind(this)
     this.state = {
       selectValue: "Category",
       categories: []
@@ -74,17 +75,30 @@ export default class Product_Category extends Component {
   }
 
   deleteCategory(id){
+    axios.delete('http://localhost:2000/api/category/' + id,
+    {
+        headers:{
+            'Authorization' : 'Bearer ' + window.localStorage.getItem('token') 
+        }
+      })
+      .then(response => { console.log(response.data) });
 
+    this.setState({
+      categories: this.state.categories.filter(el => el._id !== id),
+      scategories: this.state.scategories.filter(el => el._id !== id)
+
+    })
   }
+
   categoryList() {
     return this.state.categories.map(currentcategory => {
-      return <ParentCategory category={currentcategory} key={currentcategory._id} />;
+      return <ParentCategory category={currentcategory} deleteCategory={this.deleteCategory.bind(this)} key={currentcategory._id} />;
     })
   }
 
   subcategoryList() {
     return this.state.scategories.map(currentcategory => {
-      return <SubCategory SubCategories={this.SubCategories} subcategory={currentcategory} key={currentcategory._id} />;
+      return <SubCategory SubCategories={this.SubCategories} subcategory={currentcategory} deleteCategory={this.deleteCategory.bind(this)} key={currentcategory._id} />;
     })
   }
 
@@ -100,7 +114,7 @@ export default class Product_Category extends Component {
               <h2 style={{ fontFamily: "Times New Roman", fontWeight: "bold", textAlign: 'left', top: '50px'}}>
                 Product Categories
               <button style={{ background: "transparent", border: 0, outline: 0, float: "right" ,top: '50px'}}>
-                <Link to={'/accounts/add'}><MDBIcon icon="plus-circle" size="1x" style={{color : "#4285F4"}}/></Link>
+                <Link to={'/category/add'}><MDBIcon icon="plus-circle" size="1x" style={{color : "#4285F4"}}/></Link>
               </button></h2>
               <br />
               <p class="lead" style={{ fontFamily: "Cambria" }}>

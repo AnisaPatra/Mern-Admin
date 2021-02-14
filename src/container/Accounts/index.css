@@ -4,15 +4,10 @@
   }
   
   .flexible-content {
-      min-height: 100vh;
-    max-height: 160vh;
     background-color: white; 
+    padding-left: 40px;
   }
 
-  .content{
-    height: 100%;
-    margin-left:270px ;
-  }
 .btn{
     width: 50%;
     font-family:Copperplate;

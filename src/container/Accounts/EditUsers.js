@@ -97,6 +97,11 @@ export default class EditUsers extends Component {
       email: this.state.email,
       shop_name: this.state.shop_name,
       role: this.state.role
+    },
+    {
+      headers:{
+        'Authorization' : 'Bearer ' + window.localStorage.getItem('token') 
+      }
     })
       .then(
         response => {
@@ -188,7 +193,7 @@ export default class EditUsers extends Component {
                         <MDBInput
                           type="text" 
                           required
-                          pattern="^(\+91[\-\s]?)?[0]?[789]\d{9}$"
+                          pattern="^[789]\d{9}$"
                           value={this.state.contactNumber}
                           onChange={this.onChangecontactNumber}
                           style={{width:"250px"}}
