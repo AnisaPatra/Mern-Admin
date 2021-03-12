@@ -20,7 +20,13 @@ import EditSubCategory from './container/Product_Category/Edit SubCategory';
 import EditPaymentOption from './container/Payment/Edit PaymentOption';
 import AddPaymentOption from './container/Payment/Add PaymentOption';
 
+
 function App() {
+  
+    window.onunload = () => {
+      // Clear the local storage
+      window.localStorage.clear()
+   }
 
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth)

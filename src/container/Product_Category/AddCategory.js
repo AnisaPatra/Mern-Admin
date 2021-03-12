@@ -52,6 +52,7 @@ export default class AddCatgeory extends Component {
         this.setState({
             CategoryImage: e.target.files[0]
         })
+        console.log(this.state.CategoryImage);
     }
 
     onChangeparentCategory(e) {
