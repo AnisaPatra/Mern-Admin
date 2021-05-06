@@ -68,3 +68,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+# Mern Ecommerce B to B website
+
+The website is named as Vridhi This projects has three parties the retailers i.e. customers / users , sellers i.e. wholesellers/companies and the admin. Admin is for managing retailers and sellers accounts, categories and payment integerations. Sellers have a seller dashboard where in they can manage products, orders and change their profile. Retailers/Users can access only the frontend. They can view products, purchase products, add items in cart, place orders and edit profile. You can view the seller_frontend folder for seller part. Retailers and also use the chatbot for asking any question but they need to place their own chatbot. You can view the frontend folder for this part.You can create a chatbot https://dialogflow.cloud.google.com/ using this link. There is also a backend folder where the backend settings i.e. database settings and API are created for the project. For the seller_frontend, frontend and backend folder checkout the Mern-Admin repository on https://github.com/AnisaPatra/Mern.
