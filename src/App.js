@@ -23,7 +23,7 @@ import AddPaymentOption from './container/Payment/Add PaymentOption';
 
 function App() {
   
-    window.onunload = () => {
+  window.onunload = () => {
       // Clear the local storage
       window.localStorage.clear()
    }
@@ -57,7 +57,6 @@ function App() {
         <PrivateRoute exact path = '/payment_integerations/add/' component={AddPaymentOption} />
         <PrivateRoute exact path = '/payment_integerations/edit/:id' component={EditPaymentOption}/>
         <Route path="/signin" component={Signin} />
-
       </Switch>
     </div>
   );

@@ -12,12 +12,7 @@ export default class EditUsers extends Component {
     super(props);
 
     this.onChangename = this.onChangename.bind(this);
-    this.onChangeemail = this.onChangeemail.bind(this);
-    this.onChangeshop_name = this.onChangeshop_name.bind(this);
-    this.onChangegstin = this.onChangegstin.bind(this);
-    this.onChangecontactNumber = this.onChangecontactNumber.bind(this);
-    this.onChangerole = this.onChangerole.bind(this);
-    this.onChangepassword = this.onChangepassword.bind(this);
+    this.onChangevalue = this.onChangevalue.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
@@ -28,6 +23,7 @@ export default class EditUsers extends Component {
       contactNumber: '',
       role: 'Retailer',
       password: '',
+      address: '',
       users: []
     }
   }
@@ -38,46 +34,14 @@ export default class EditUsers extends Component {
     })
   }
 
-  onChangepassword(e) {
+  onChangevalue(e) {
+    const {name, value} = e.target
     this.setState({
-      password: e.target.value
-    })
-  }
-  onChangeshop_name(e) {
-    this.setState({
-      shop_name: e.target.value
+      [name]: value
     })
   }
 
-  onChangegstin(e) {
-    this.setState({
-      gstin: e.target.value
-    })
-  }
 
-  onChangerole(e) {
-    this.setState({
-      role: e.target.value
-    })
-  }
-
-  onChangecontactNumber(e) {
-    this.setState({
-      contactNumber: e.target.value
-    })
-  }
-
-  onChangeemail(e) {
-    this.setState({
-      email: e.target.value
-    })
-  }
-
-  onChangerole(e) {
-    this.setState({
-      role: e.target.value
-    })
-  }
   onSubmit(e) {
     e.preventDefault();
     axios.post('http://localhost:2000/api/signup', {
@@ -87,7 +51,8 @@ export default class EditUsers extends Component {
       gstin: this.state.gstin,
       email: this.state.email,
       shop_name: this.state.shop_name,
-      role: this.state.role
+      role: this.state.role,
+      address : this.state.address
     })
       .then(
         response => {
@@ -106,6 +71,7 @@ export default class EditUsers extends Component {
       contactNumber: '',
       role: 'Retailer',
       password: '',
+      address:'',
       users: []
 
     })
@@ -148,8 +114,9 @@ export default class EditUsers extends Component {
                           required
                           maxlength="20"
                           minlength="6"
+                          name="password"
                           value={this.state.password}
-                          onChange={this.onChangepassword}
+                          onChange={this.onChangevalue}
                           style={{ width: "250px" }}
                         />
                       </td>
@@ -160,9 +127,11 @@ export default class EditUsers extends Component {
                       </td>
                       <td>
                         <MDBInput type="email"
+                          pattern = "^[a-zA-Z0-9.!#$%'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
                           required
+                          name="email"
                           value={this.state.email}
-                          onChange={this.onChangeemail}
+                          onChange={this.onChangevalue}
                           style={{ width: "250px" }}
                         />
                       </td>
@@ -177,8 +146,9 @@ export default class EditUsers extends Component {
                           required
                           maxlength="50"
                           minlength="3"
+                          name="shop_name"
                           value={this.state.shop_name}
-                          onChange={this.onChangeshop_name}
+                          onChange={this.onChangevalue}
                           style={{ width: "250px" }}
                         />
                       </td>
@@ -193,7 +163,8 @@ export default class EditUsers extends Component {
                           required
                           pattern="^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
                           value={this.state.gstin}
-                          onChange={this.onChangegstin}
+                          name="gstin"
+                          onChange={this.onChangevalue}
                           autofocus="false"
                           style={{ width: "250px" }}
                         />
@@ -209,7 +180,8 @@ export default class EditUsers extends Component {
                           required
                           pattern="^[789]\d{9}$"
                           value={this.state.contactNumber}
-                          onChange={this.onChangecontactNumber}
+                          onChange={this.onChangevalue}
+                          name="contactNumber"
                           style={{ width: "250px" }}
                         />
                       </td>
@@ -221,12 +193,31 @@ export default class EditUsers extends Component {
                       <td>
                         <select ref="userInput"
                           required
-                          style={{ width: "250px", height: "40px", borderRadius: "4px", borderColor: "#d9d9d9" }}
+                          style={{ width: "250px" }}
+                          className="form-control"
                           value={this.state.role}
-                          onChange={this.onChangerole}>
+                          name="role"
+                          onChange={this.onChangevalue}>
                           <option>Retailer</option>
                           <option>Seller</option>
                         </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Address: </label>
+                      </td>
+                      <td>
+                        <textarea
+                          type="text"
+                          required
+                          maxlength="100000"
+                          value={this.state.address}
+                          onChange={this.onChangevalue}
+                          name="address"
+                          className="form-control"
+                          style={{ width: "250px" }}
+                        />
                       </td>
                     </tr>
                     <br />

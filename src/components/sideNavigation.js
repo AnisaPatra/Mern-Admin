@@ -24,12 +24,6 @@ const SideNavigation = () => {
                         Payment Integerations
                     </MDBListGroupItem>
                 </NavLink>
-                <NavLink to="/languages" activeClassName="activeClass">
-                    <MDBListGroupItem>
-                        <MDBIcon icon="globe" className="mr-3" size="lg"/>
-                        Languages
-                    </MDBListGroupItem>
-                </NavLink>
                 <NavLink to="/accounts" activeClassName="activeClass">
                     <MDBListGroupItem>
                     <MDBIcon icon="user" className="mr-3" size="lg"/>

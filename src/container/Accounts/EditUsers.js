@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Container,Button } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import Layout from '../../components/Layout';
 import SideNavigation from '../../components/sideNavigation';
-import { MDBInput} from "mdbreact";
+import { MDBInput } from "mdbreact";
 import { Link } from 'react-router-dom';
 import './index.css';
 
@@ -12,11 +12,7 @@ export default class EditUsers extends Component {
     super(props);
 
     this.onChangename = this.onChangename.bind(this);
-    this.onChangeemail = this.onChangeemail.bind(this);
-    this.onChangeshop_name = this.onChangeshop_name.bind(this);
-    this.onChangegstin = this.onChangegstin.bind(this);
-    this.onChangecontactNumber = this.onChangecontactNumber.bind(this);
-    this.onChangerole = this.onChangerole.bind(this);
+    this.onChangevalue = this.onChangevalue.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
@@ -26,6 +22,8 @@ export default class EditUsers extends Component {
       gstin: '',
       contactNumber: '',
       role: '',
+      address: '',
+      password : '',
       users: []
     }
   }
@@ -35,7 +33,8 @@ export default class EditUsers extends Component {
       .then(response => {
         this.setState({
           name: response.data.name, email: response.data.email, shop_name: response.data.shop_name,
-          gstin: response.data.gstin, contactNumber: response.data.contactNumber, role: response.data.role
+          address: response.data.address, gstin: response.data.gstin, contactNumber: response.data.contactNumber,
+          role: response.data.role
         });
       })
       .catch((error) => {
@@ -51,41 +50,13 @@ export default class EditUsers extends Component {
     })
   }
 
-  onChangeshop_name(e) {
+  onChangevalue(e) {
+    const { name, value } = e.target
     this.setState({
-      shop_name: e.target.value
+      [name]: value
     })
   }
 
-  onChangegstin(e) {
-    this.setState({
-      gstin: e.target.value
-    })
-  }
-
-  onChangerole(e) {
-    this.setState({
-      role: e.target.value
-    })
-  }
-
-  onChangecontactNumber(e) {
-    this.setState({
-      contactNumber: e.target.value
-    })
-  }
-
-  onChangeemail(e) {
-    this.setState({
-      email: e.target.value
-    })
-  }
-
-  onChangerole(e) {
-    this.setState({
-      role: e.target.value
-    })
-  }
   onSubmit(e) {
     e.preventDefault();
     var patharray = window.location.pathname.split('/');
@@ -96,20 +67,21 @@ export default class EditUsers extends Component {
       gstin: this.state.gstin,
       email: this.state.email,
       shop_name: this.state.shop_name,
-      role: this.state.role
+      role: this.state.role,
+      address: this.state.address
     },
-    {
-      headers:{
-        'Authorization' : 'Bearer ' + window.localStorage.getItem('token') 
-      }
-    })
+      {
+        headers: {
+          'Authorization': 'Bearer ' + window.localStorage.getItem('token')
+        }
+      })
       .then(
         response => {
           this.setState({ users: response.data });
         }
       );
-    
-      window.alert("User details Updated Successfully");
+
+    window.alert("User details Updated Successfully");
   }
 
   render() {
@@ -121,7 +93,7 @@ export default class EditUsers extends Component {
           <main id="content" className="p-5" >
             <Container style={{ backgroundColor: "white" }}>
               <h2 class="h2">Edit User</h2>
-              <br/>
+              <br />
               <form onSubmit={this.onSubmit}>
                 <table cellPadding="10" cellSpacing="25">
                   <tbody class="tbody">
@@ -136,7 +108,7 @@ export default class EditUsers extends Component {
                           minlength="3"
                           value={this.state.name}
                           onChange={this.onChangename}
-                          style={{width:"250px"}}
+                          style={{ width: "250px" }}
                         />
                       </td>
                     </tr>
@@ -146,10 +118,12 @@ export default class EditUsers extends Component {
                       </td>
                       <td>
                         <MDBInput type="email"
+                          pattern="^[a-zA-Z0-9.!#$%'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
                           required
+                          name="email"
                           value={this.state.email}
-                          onChange={this.onChangeemail}
-                          style={{width:"250px"}}
+                          onChange={this.onChangevalue}
+                          style={{ width: "250px" }}
                         />
                       </td>
                     </tr>
@@ -163,9 +137,10 @@ export default class EditUsers extends Component {
                           required
                           maxlength="50"
                           minlength="3"
+                          name="shop_name"
                           value={this.state.shop_name}
-                          onChange={this.onChangeshop_name}
-                          style={{width:"250px"}}
+                          onChange={this.onChangevalue}
+                          style={{ width: "250px" }}
                         />
                       </td>
                     </tr>
@@ -179,9 +154,10 @@ export default class EditUsers extends Component {
                           required
                           pattern="^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
                           value={this.state.gstin}
-                          onChange={this.onChangegstin}
+                          name="gstin"
+                          onChange={this.onChangevalue}
                           autofocus="false"
-                          style={{width:"250px"}}
+                          style={{ width: "250px" }}
                         />
                       </td>
                     </tr>
@@ -191,12 +167,13 @@ export default class EditUsers extends Component {
                       </td>
                       <td>
                         <MDBInput
-                          type="text" 
+                          type="text"
                           required
                           pattern="^[789]\d{9}$"
                           value={this.state.contactNumber}
-                          onChange={this.onChangecontactNumber}
-                          style={{width:"250px"}}
+                          onChange={this.onChangevalue}
+                          name="contactNumber"
+                          style={{ width: "250px" }}
                         />
                       </td>
                     </tr>
@@ -207,27 +184,47 @@ export default class EditUsers extends Component {
                       <td>
                         <select ref="userInput"
                           required
-                          style={{width:"250px", height: "40px" , borderRadius: "4px", borderColor: "#d9d9d9"}}
+                          style={{ width: "250px" }}
+                          className="form-control"
                           value={this.state.role}
-                          onChange={this.onChangerole}>
+                          name="role"
+                          onChange={this.onChangevalue}>
                           <option>Retailer</option>
                           <option>Seller</option>
                         </select>
                       </td>
                     </tr>
-                    <br/>
                     <tr>
                       <td>
-                      <Link to = "/accounts"><Button variant="outline-secondary" class="btn">Back</Button></Link>
+                        <label>Address: </label>
                       </td>
                       <td>
-                      <Button type="submit" variant="outline-success" class="btn">Update</Button>
+                        <textarea
+                          className="form-control"
+                          type="text"
+                          required
+                          maxlength="100000"
+                          value={this.state.address}
+                          onChange={this.onChangevalue}
+                          name="address"
+                          style={{ width: "250px" }}
+                        />
+                      </td>
+                    </tr>
+              
+                    <br />
+                    <tr>
+                      <td>
+                        <Link to="/accounts"><Button variant="outline-secondary" class="btn">Back</Button></Link>
+                      </td>
+                      <td>
+                        <Button type="submit" variant="outline-success" class="btn">Update</Button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </form>
-              <br/>
+              <br />
             </Container>
           </main>
         </div>

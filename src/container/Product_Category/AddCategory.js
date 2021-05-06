@@ -23,7 +23,8 @@ export default class AddCatgeory extends Component {
             CategoryImage: null,
             parentCategory: "Food",
             categories: [],
-            parents: []
+            parents: [],
+            description:null
         };
 
         this.handleDropdownChange = this.handleDropdownChange.bind(this);
@@ -32,6 +33,7 @@ export default class AddCatgeory extends Component {
         this.onChangeparentCategory = this.onChangeparentCategory.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onSubmitCategory = this.onSubmitCategory.bind(this);
+        this.onChangedescription = this.onChangedescription.bind(this);
 
     }
 
@@ -43,6 +45,12 @@ export default class AddCatgeory extends Component {
     onChangename(e) {
         this.setState({
             name: e.target.value
+        })
+    }
+
+    onChangedescription(e) {
+        this.setState({
+            description: e.target.value
         })
     }
 
@@ -95,6 +103,7 @@ export default class AddCatgeory extends Component {
         e.preventDefault();
         const formData = new FormData();
         formData.append("name", this.state.name);
+        formData.append("description",this.state.description);
         formData.append("CategoryImage", this.state.CategoryImage);
         axios.post('http://localhost:2000/api/category/create', formData,
             {
@@ -147,6 +156,20 @@ export default class AddCatgeory extends Component {
                                                                     style={{ width: "250px" }}
                                                                     value={this.state.name}
                                                                     onChange={this.onChangename}
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label>Description: </label>
+                                                            </td>
+                                                            <td>
+                                                                <MDBInput type="text"
+                                                                    required
+                                                                    minlength="3"
+                                                                    style={{ width: "250px" }}
+                                                                    value={this.state.descriiption}
+                                                                    onChange={this.onChangedescription}
                                                                 />
                                                             </td>
                                                         </tr>
